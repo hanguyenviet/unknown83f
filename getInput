@@ -1,0 +1,121 @@
+package validator;
+
+import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ *
+ * @author ADMIN
+ */
+public class getInput {
+
+    public static int getLimitInt(String messageInfor, String messageError,
+            String messageOutRange, int min, int max) {
+        System.out.println(messageInfor);
+        //user enter input
+        Scanner input = new Scanner(System.in);
+        int number = 0;
+        while (true) {
+            try {
+                String inputNumber = input.nextLine();
+                //check input is number or not
+                number = Integer.parseInt(inputNumber);
+                //check number in range or not
+                if (min <= number && number <= max) {
+                    break;
+                } else {
+                    System.out.println(messageOutRange);
+                }
+                //return value of input if correct
+            } catch (Exception e) {
+                System.out.println(messageError);
+            }
+        }
+        return number;
+    }
+
+    public static float getLimitFloat(String messageInfor,
+            float min, float max, String messageError, String messageOutRange) {
+        System.out.println(messageInfor);
+        //user enter input
+        Scanner input = new Scanner(System.in);
+        float number = 0;
+        while (true) {
+            try {
+                String inputNumber = input.nextLine();
+                //check input is number or not
+                number = Float.parseFloat(inputNumber);
+                //check number in range or not
+                if (min <= number && number <= max) {
+                    break;
+                } else {
+                    System.out.println(messageOutRange);
+                }
+                //return value of input if correct
+            } catch (Exception e) {
+                System.out.println(messageError);
+            }
+        }
+        return number;
+    }
+
+    public static String getStringFormat(String messageInfor, String format,
+            String messageError) {
+        System.out.println(messageInfor);
+        Scanner input = new Scanner(System.in);
+        String userInput;
+        while (true) {
+            //enter input
+            userInput = input.nextLine();
+            userInput = userInput.trim();
+            userInput = userInput.replaceAll("\\s+", " ");
+            //create regex
+            Pattern form = Pattern.compile(format);
+            //check correct format
+            Matcher check = form.matcher(userInput);
+            if (check.find()) {
+                return userInput;
+            } else {
+                System.out.println(messageError);
+            }
+
+        }
+    }
+
+    public static String getPassword(String messageInfor, String format,
+            String messageError) {
+        System.out.println(messageInfor);
+        Scanner input = new Scanner(System.in);
+        String userInput;
+        while (true) {
+            boolean num = false;
+            boolean letter = false;
+            //enter input
+            userInput = input.nextLine();
+            userInput = userInput.trim();
+            userInput = userInput.replaceAll("\\s+", " ");
+            //create regex
+            Pattern form = Pattern.compile(format);
+            //check correct format
+            Matcher check = form.matcher(userInput);
+            char[] arrayChar = userInput.toCharArray();
+            for (int i = 0; i < arrayChar.length; i++) {
+                if (Character.isDigit(arrayChar[i])) {
+                    num = true;
+                }
+                if (Character.isLetter(arrayChar[i])) {
+                    letter = true;
+                }
+            }
+            if (!check.find()) {
+                System.out.println(messageError);
+            } else if (num == false || letter == false) {
+                System.out.println(messageError);
+            } else {
+                return userInput;
+            }
+        }
+    }
+
+}
